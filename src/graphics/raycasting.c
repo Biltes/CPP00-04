@@ -49,7 +49,7 @@ void	calculate_side_distances(t_dda *dda, t_player *player)
 			* dda->delta_dist.y;
 }
 
-void	perform_dda(t_dda *dda, t_render *game)
+void	perform_dda(t_dda *dda, t_game *game)
 {
 	
 	while (game->map->map_matrix[(int)dda->map_pos.y][(int)dda->map_pos.x] != '1')
