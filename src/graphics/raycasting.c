@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:19:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/10 14:32:33 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:34:49 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ static int	get_step_direction(double dir)
 void	calculate_delta_distances(t_dda *dda)
 {
 	if (dda->ray_dir.x == 0)
-		dda->delta_dist.x = HUGE_VALF;
+		dda->delta_dist.x = HUGE_VAL;
 	else
 		dda->delta_dist.x = fabs(1 / dda->ray_dir.x);
 	if (dda->ray_dir.y == 0)
-		dda->delta_dist.y = HUGE_VALF;
+		dda->delta_dist.y = HUGE_VAL;
 	else
 		dda->delta_dist.y = fabs(1 / dda->ray_dir.y);
 }
 
 void	calculate_side_distances(t_dda *dda, t_player *player)
 {
-	dda->map_pos.x = (double)player->init_pos_x;
-	dda->map_pos.y = (double)player->init_pos_y;
+	dda->map_pos.x = (int)player->pos.x;
+	dda->map_pos.y = (int)player->pos.y;
 	if (dda->ray_dir.x < 0)
 		dda->side_dist.x = (player->pos.x - dda->map_pos.x) * dda->delta_dist.x;
 	else
@@ -49,10 +49,10 @@ void	calculate_side_distances(t_dda *dda, t_player *player)
 			* dda->delta_dist.y;
 }
 
-void	perform_dda(t_dda *dda, t_game *game)
+void	perform_dda(t_dda *dda, t_map *map)
 {
 	
-	while (game->map->map_matrix[(int)dda->map_pos.y][(int)dda->map_pos.x] != '1')
+	while (map->map_matrix[(int)dda->map_pos.y][(int)dda->map_pos.x] != '1')
 	{
 		if (dda->side_dist.x < dda->side_dist.y)
 		{
@@ -78,19 +78,19 @@ int	draw_rays(t_game *game)
 	int		x;
 	t_dda	dda;
 
-	dda.perp_wall_dist = 0;
-	dda.hit = 0;
 	x = 0;
-	while (x < SCREEN_WIDTH)
+	while (x < WIDTH)
 	{
-		dda.camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
-		dda.pixel = x_vector(game->player->plane, dda.camera_x);
-		dda.ray_dir = add_vector(game->player->dir, dda.pixel);
+		dda.camera_x = 2 * x / (double) WIDTH - 1;
+		dda.ray_dir.x = game->player->dir.x + game->player->plane.pos.x
+			* dda.camera_x;
+		dda.ray_dir.y = game->player->dir.y + game->player->plane.pos.y
+			* dda.camera_x;
 		dda.step.x = get_step_direction(dda.ray_dir.x);
 		dda.step.y = get_step_direction(dda.ray_dir.y);
 		calculate_delta_distances(&dda);
 		calculate_side_distances(&dda, game->player);
-		perform_dda(&dda, &game->render);
+		perform_dda(&dda, game->map);
 		draw_walls_and_background(&dda, game, x);
 		x++;
 	}

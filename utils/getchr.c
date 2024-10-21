@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_err.c                                        :+:      :+:    :+:   */
+/*   getchr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 17:23:23 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/11 18:10:53 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/10/12 18:04:41 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void ft_print_err(char *err)
+char	getchr(const char *s, int c)
 {
-    while(*err)
-        write(2,err++,1);
-    write(2,"\n",1);
+	while (*s)
+	{
+		if (*(unsigned char *)s == (unsigned char)c)
+			return (*s);
+		s++;
+	}
+	if (*(unsigned char *)s == (unsigned char)c)
+		return (*s);
+	return (0);
 }

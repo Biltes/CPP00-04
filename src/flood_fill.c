@@ -6,33 +6,31 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 21:19:04 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/07 14:43:44 by crocha-s         ###   ########.fr       */
+/*   Updated: 2024/10/19 16:31:40 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static int	seed(char **square_map, int height, int width)
+static int	seed(char **map, int height, int width)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	j = 1;
-	height = height -2;
-	width = width - 1;
-	while (square_map[i] && i < height)
+	while (map[i] && i < height)
 	{
 		j = 1;
-		while (square_map[i][j] && j < width)
+		while (map[i][j] && j < width)
 		{
-			if (square_map[i][j] == '0' || square_map[i][j] == '0')
+			if (map[i][j] == '0' ||
+			map[i][j] == getchr("NSWE", map[i][j]))
 			{
-				if (square_map[i][j - 1] == '#' || square_map[i][j + 1] == '#')
-					return (1);
-				if (square_map[i + 1][j] == '#' || square_map[i + 1][j - 1] == '#' || square_map[i + 1][j + 1] == '#')
-					return (1);
-				if (square_map[i - 1][j] == '#' || square_map[i - 1][j - 1] == '#' || square_map[i - 1][j + 1] == '#')
+				if (map[i][j - 1] == '#' || map[i][j + 1] == '#' ||
+				map[i + 1][j] == '#' || map[i + 1][j - 1] == '#' ||
+				map[i + 1][j + 1] == '#' || map[i - 1][j] == '#' ||
+				map[i - 1][j - 1] == '#' || map[i - 1][j + 1] == '#')
 					return (1);
 			}
 			j++;
@@ -63,11 +61,8 @@ static char	**create_sqd_map(int height, int max_width, char **map_line)
 
 	i = 0;
 	temp = (char **)ft_calloc(height, sizeof(char *));
-    if (!temp)
-	{
-        return (NULL);
-	}
-		
+	if (!temp)
+		return (NULL);
 	while (i < height -1)
 	{
 		temp[i] = (char *)ft_calloc((max_width + 1), sizeof(char));
@@ -90,7 +85,7 @@ static char	**create_sqd_map(int height, int max_width, char **map_line)
 void	fill_map(t_game *game, char **squared_map, int height)
 {
 	int	i;
-	int j;
+	int	j;
 
 	game->map->map_matrix = (char **)ft_calloc(height, sizeof(char *));
 	if (!game->map->map_matrix)
@@ -99,9 +94,9 @@ void	fill_map(t_game *game, char **squared_map, int height)
 	while (squared_map[i])
 	{
 		j = 0;
-		while(squared_map[i][j])
+		while (squared_map[i][j])
 		{
-			if(squared_map[i][j] == ' ')
+			if (squared_map[i][j] == ' ')
 				squared_map[i][j] = '#';
 			j++;
 		}
@@ -122,9 +117,9 @@ int	flood_fill(char **map_line, t_game *game)
 	fill_map(game, squared_map, height);
 	game->map->n_lines = height;
 	game->map->width = max_width;
-	if (seed(squared_map, height, max_width) != 0)
+	if (seed(squared_map, height - 2, max_width - 1) != 0)
 	{
-		ft_print_err("Error: Map is not enclosed by walls.");
+		ft_print_err("Error: Map or player is not enclosed by walls.");
 		free_arr(squared_map);
 		return (1);
 	}

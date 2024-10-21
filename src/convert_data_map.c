@@ -3,26 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   convert_data_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 19:52:08 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/09 14:25:25 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/19 20:18:30 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
+int	rgb_to_hex(int *rgb)
+{
+	int	color;
+
+	color = (rgb[0] << 16 | rgb[1] << 8
+			| rgb[2]);
+	
+	return (color);
+}
+
+
 static int	are_color_valid(t_game *game)
 {
 	int	i;
-	int	*ceiling_color;
-	int	*floor_color;
+	int	*color;
 
 	i = 0;
-	ceiling_color = game->map->ceiling;
-	while (ceiling_color[i] && i < 3)
+	color = game->map->ceiling;
+	while (color[i] && i < 3)
 	{
-		if (ceiling_color[i] > 255)
+		if (color[i] > 255)
 		{
 			ft_print_err("Error: Ceiling color index is not valid.");
 			return (1);
@@ -30,10 +40,10 @@ static int	are_color_valid(t_game *game)
 		i++;
 	}
 	i = 0;
-	floor_color = game->map->floor;
-	while (floor_color[i] && i < 3)
+	color = game->map->floor;
+	while (color[i] && i < 3)
 	{
-		if (floor_color[i] > 255)
+		if (color[i] > 255)
 		{
 			ft_print_err("Error: Floor color index is not valid.");
 			return (1);
@@ -47,23 +57,25 @@ static void	read_fc_color(t_game *game, char *line)
 {
 	char	**temp;
 	int		i;
-	
+
 	i = -1;
-	if(!ft_strncmp(line, "F ", 1))
+	if (!ft_strncmp(line, "F ", 1))
 	{
 		temp = ft_split(line + 1, ',');
-		while(temp[++i])
+		while (temp[++i])
 			game->map->floor[i] = ft_atoi(temp[i]);
 		free_arr(temp);
 	}
+	game->map->f_color = rgb_to_hex(game->map->floor);
 	i = -1;
-	if(!ft_strncmp(line, "C ", 1))
+	if (!ft_strncmp(line, "C ", 1))
 	{
 		temp = ft_split(line + 1, ',');
-		while(temp[++i])
+		while (temp[++i])
 			game->map->ceiling[i] = ft_atoi(temp[i]);
 		free_arr(temp);
 	}
+	game->map->c_color = rgb_to_hex(game->map->ceiling);
 }
 
 int	convert_data_map(t_game *game, char *temp_raw_map)

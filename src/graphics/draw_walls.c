@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:00:05 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/10 11:54:47 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/20 23:35:19 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	intersection_point(t_dda *ray, t_game *game, t_render *wall)
+static void	intersection_point(t_dda *ray, t_game *game, t_rays *wall)
 {
-	if (ray->side == 0)
-		wall->point_x = game->player->pos.y + ray->perp_wall_dist
+	if (ray->hit == 0)
+		wall->intersection.x = game->player->pos.y + ray->perp_wall_dist
 			* ray->ray_dir.y;
 	else
-		wall->point_x = game->player->pos.x + ray->perp_wall_dist
+		wall->intersection.x = game->player->pos.x + ray->perp_wall_dist
 			* ray->ray_dir.x;
-	wall->point_x -= floor(wall->point_x);
+	wall->intersection.x -= floor(wall->intersection.x);
 }
 
-static void	find_texture_position_x(t_dda *ray, t_game *game, t_render *wall)
+static void	find_texture_position_x(t_dda *ray, t_game *game, t_rays *wall)
 {
-	wall->texture_x = (int)(wall->point_x * game->texture->width);
-	if ((ray->side == 0 && ray->ray_dir.x < 0)
-		|| (ray->side == 1 && ray->ray_dir.y > 0))
-		wall->texture_x = game->texture->width - wall->texture_x - 1;
-	wall->texture_step = (double)game->texture->height / wall->height;
+	game->img_info.tex_x = (int)(wall->intersection.x * game->texture->width);
+	if ((ray->hit == 0 && ray->ray_dir.x < 0)
+		|| (ray->hit == 1 && ray->ray_dir.y > 0))
+		game->img_info.tex_x = game->texture->width - game->img_info.tex_x - 1;
+	game->img_info.scale = (double)game->texture->height / game->render->height;
 }
 
 void	*set_wall_texture(t_game *game, t_dda *ray)
@@ -52,21 +52,19 @@ void	*set_wall_texture(t_game *game, t_dda *ray)
 
 void	draw_walls_and_background(t_dda *ray, t_game *game, int x)
 {
-	t_render	wall;
+	t_game	wall;
 	t_render	*texture;
 
-	wall.height = 0;
-    wall.point_x = 0;
 	texture = set_wall_texture(game, ray);
-	wall.height = (int)(SCREEN_HEIGHT / ray->perp_wall_dist);
-	wall.start_y = (SCREEN_HEIGHT - wall.height) / 2;
-	wall.end_y = (SCREEN_HEIGHT + wall.height) / 2;
-	wall.start_y = fmax(0, wall.start_y);
+	wall.render->height = (int)(HEIGHT / ray->perp_wall_dist);
+	wall.img_info.draw_start = (HEIGHT - wall.render->height) / 2;
+	wall.img_info.draw_end = (HEIGHT + wall.render->height) / 2;
+	// wall.img_info.draw_start = fmax(0, wall.img_info.draw_start);
 	intersection_point(ray, game, &wall);
 	find_texture_position_x(ray, game, &wall);
-	wall.texture_pos = (wall.start_y - SCREEN_HEIGHT / 2
-			+ wall.height / 2) * wall.texture_step;
-	draw_ceiling(game, x, wall.start_y);
+	wall.img_info.pos_texture = (wall.img_info.draw_start - HEIGHT / 2
+			+ wall.render->height / 2) * wall.img_info.scale;
+	draw_ceiling(game, x, wall.img_info.draw_start);
 	draw_wall(game, &wall, texture, x);
-	draw_floor(game, x, wall.end_y);
+	draw_floor(game, x, wall.img_info.draw_end);
 }

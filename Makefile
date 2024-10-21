@@ -3,19 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: migupere <migupere@student.42.fr>          +#+  +:+       +#+         #
+#    By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 18:01:36 by crocha-s          #+#    #+#              #
-#    Updated: 2024/10/10 14:30:14 by migupere         ###   ########.fr        #
+#    Updated: 2024/10/20 23:40:28 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Nome do programa
-NAME = cub3d
+NAME = cub
 
 # Compilador e flags
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g #-Wall -Wextra -Werror
 
 # Diretórios
 SRC_DIR = src
@@ -31,18 +31,18 @@ SRC_FILES = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/parse_map_matrix.c \
 			$(SRC_DIR)/convert_data_map.c \
 			$(SRC_DIR)/flood_fill.c  \
-			$(SRC_DIR)/free.c \
-			$(SRC_DIR)/keys.c \
-			$(SRC_DIR)/graphics/draw_utils.c \
-			$(SRC_DIR)/graphics/draw_walls.c \
-			$(SRC_DIR)/graphics/init_mlx_text.c \
+			$(SRC_DIR)/make_game.c \
+			$(SRC_DIR)/hooks.c \
+			$(SRC_DIR)/movements.c \
+			$(SRC_DIR)/graphics/ \
+			$(SRC_DIR)/texture_utils.c \
 			$(SRC_DIR)/graphics/raycasting.c \
-			$(SRC_DIR)/graphics/movement.c \
-			$(SRC_DIR)/graphics/vector.c \
+			$(SRC_DIR)/free.c \
 			$(SRC_DIR)/graphics/utils.c \
 			
 
-UTILS_FILES = $(UTILS_DIR)/print_err.c
+UTILS_FILES = $(UTILS_DIR)/print_err.c \
+			  $(UTILS_DIR)/getchr.c
 
 # Arquivos de bibliotecas
 LIBFT = $(LIBFT_DIR)/libft.a
