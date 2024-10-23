@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:58:16 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/20 23:34:56 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:47:05 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,10 @@ typedef struct s_map
 
 typedef struct s_image
 {
-	void		*img;
-	char		*addr;
-	int			bpp;
-	int			line_len;
+	void		*img_ptr;
+	char		*address;
+	int			bits_per_pixel;
+	int			line_length;
 	int			endian;
 }	t_image;
 

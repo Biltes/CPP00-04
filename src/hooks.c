@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:22:20 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/20 23:29:26 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:45:53 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	end_game(t_game *game)
 	free (game->map->map_matrix);
 	i = -1;
 	while (++i < 4)
-		mlx_destroy_image(game->mlx, game->render[i].image.img);
+		mlx_destroy_image(game->mlx, game->render[i].image.img_ptr);
 	mlx_clear_window(game->mlx, game->win);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);

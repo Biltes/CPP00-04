@@ -6,7 +6,7 @@
 #    By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 18:01:36 by crocha-s          #+#    #+#              #
-#    Updated: 2024/10/20 23:40:28 by migupere         ###   ########.fr        #
+#    Updated: 2024/10/23 09:49:23 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ SRC_FILES = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/make_game.c \
 			$(SRC_DIR)/hooks.c \
 			$(SRC_DIR)/movements.c \
-			$(SRC_DIR)/graphics/ \
 			$(SRC_DIR)/texture_utils.c \
-			$(SRC_DIR)/graphics/raycasting.c \
+			$(SRC_DIR)/raycasting.c \
 			$(SRC_DIR)/free.c \
-			$(SRC_DIR)/graphics/utils.c \
+			$(SRC_DIR)/utils.c \
+			$(SRC_DIR)/image.c \
 			
 
 UTILS_FILES = $(UTILS_DIR)/print_err.c \
