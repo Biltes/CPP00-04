@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 19:52:22 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/23 09:47:24 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:32:47 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	ft_perror(char *msg, t_game *game)
 		exit (EXIT_FAILURE);
 	while (++i < 4)
 	{
-		if (game->render[i].image.img_ptr)
-			mlx_destroy_image(game->mlx, game->render[i].image.img_ptr);
+		if (game->render[i].img)
+			mlx_destroy_image(game->mlx, game->render[i].img);
 	}
 	if (game->mlx)
 	{

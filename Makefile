@@ -6,12 +6,12 @@
 #    By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/01 18:01:36 by crocha-s          #+#    #+#              #
-#    Updated: 2024/10/23 09:49:23 by migupere         ###   ########.fr        #
+#    Updated: 2024/10/24 17:15:09 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Nome do programa
-NAME = cub
+NAME = cub3d
 
 # Compilador e flags
 CC = gcc
@@ -31,15 +31,16 @@ SRC_FILES = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/parse_map_matrix.c \
 			$(SRC_DIR)/convert_data_map.c \
 			$(SRC_DIR)/flood_fill.c  \
-			$(SRC_DIR)/make_game.c \
-			$(SRC_DIR)/hooks.c \
-			$(SRC_DIR)/movements.c \
-			$(SRC_DIR)/texture_utils.c \
-			$(SRC_DIR)/raycasting.c \
 			$(SRC_DIR)/free.c \
+			$(SRC_DIR)/keys.c \
+			$(SRC_DIR)/hooks.c \
 			$(SRC_DIR)/utils.c \
-			$(SRC_DIR)/image.c \
-			
+			$(SRC_DIR)/graphics/draw_utils.c \
+			$(SRC_DIR)/graphics/draw_walls.c \
+			$(SRC_DIR)/graphics/init_mlx_text.c \
+			$(SRC_DIR)/graphics/raycasting.c \
+			$(SRC_DIR)/graphics/utils.c \
+			$(SRC_DIR)/graphics/vector.c \
 
 UTILS_FILES = $(UTILS_DIR)/print_err.c \
 			  $(UTILS_DIR)/getchr.c

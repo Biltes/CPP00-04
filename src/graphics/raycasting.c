@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 12:19:40 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/20 23:34:49 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:55:30 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static int	get_step_direction(double dir)
 
 void	calculate_delta_distances(t_dda *dda)
 {
-	if (dda->ray_dir.x == 0)
-		dda->delta_dist.x = HUGE_VAL;
-	else
+	// if (dda->ray_dir.x == 0)
+	// 	dda->delta_dist.x = HUGE_VAL;
+	// else
 		dda->delta_dist.x = fabs(1 / dda->ray_dir.x);
-	if (dda->ray_dir.y == 0)
-		dda->delta_dist.y = HUGE_VAL;
-	else
+	// if (dda->ray_dir.y == 0)
+	// 	dda->delta_dist.y = HUGE_VAL;
+	// else
 		dda->delta_dist.y = fabs(1 / dda->ray_dir.y);
 }
 
@@ -37,7 +37,10 @@ void	calculate_side_distances(t_dda *dda, t_player *player)
 	dda->map_pos.x = (int)player->pos.x;
 	dda->map_pos.y = (int)player->pos.y;
 	if (dda->ray_dir.x < 0)
+	{
+		get_step_direction(dir);
 		dda->side_dist.x = (player->pos.x - dda->map_pos.x) * dda->delta_dist.x;
+	}
 	else
 		dda->side_dist.x = (dda->map_pos.x + 1.0 - player->pos.x)
 			* dda->delta_dist.x;
@@ -49,28 +52,33 @@ void	calculate_side_distances(t_dda *dda, t_player *player)
 			* dda->delta_dist.y;
 }
 
-void	perform_dda(t_dda *dda, t_map *map)
+void	perform_dda(t_game *game)
 {
+	int	hit;
+
+	hit = false;
 	
-	while (map->map_matrix[(int)dda->map_pos.y][(int)dda->map_pos.x] != '1')
+	while(!hit)
 	{
-		if (dda->side_dist.x < dda->side_dist.y)
+		if (game->ray.side_dist.x < game->ray.side_dist.y)
 		{
-			dda->side_dist.x += dda->delta_dist.x;
-			dda->map_pos.x += dda->step.x;
-			dda->side = 0;
+			game->ray.side_dist.x += game->ray.delta_dist.x;
+			game->player->init_pos_x += game->ray.step.x;
+			game->ray.side = true;
 		}
 		else
 		{
-			dda->side_dist.y += dda->delta_dist.y;
-			dda->map_pos.y += dda->step.y;
-			dda->side = 1;
+			game->ray.side_dist.y += game->ray.delta_dist.y;
+			game->player->init_pos_y += game->ray.step.y;
+			game->ray.side = false;
 		}
+		if (game->map->map_matrix[(int)game->player->init_pos_y][(int)game->player->init_pos_x] == '1')
+			hit = true;
 	}
-	if (dda->side == 0)
-		dda->perp_wall_dist = dda->side_dist.x - dda->delta_dist.x;
+	if (game->ray.side == 0)
+		game->ray.perp_wall_dist = game->ray.side_dist.x - game->ray.delta_dist.x;
 	else
-		dda->perp_wall_dist = dda->side_dist.y - dda->delta_dist.y;
+		game->ray.perp_wall_dist = game->ray.side_dist.y - game->ray.delta_dist.y;
 }
 
 int	draw_rays(t_game *game)
@@ -79,18 +87,18 @@ int	draw_rays(t_game *game)
 	t_dda	dda;
 
 	x = 0;
-	while (x < WIDTH)
+	while (x < SCREEN_WIDTH)
 	{
-		dda.camera_x = 2 * x / (double) WIDTH - 1;
-		dda.ray_dir.x = game->player->dir.x + game->player->plane.pos.x
+		dda.camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+		dda.ray_dir.x = game->player->dir.x + game->player->plane.x
 			* dda.camera_x;
-		dda.ray_dir.y = game->player->dir.y + game->player->plane.pos.y
+		dda.ray_dir.y = game->player->dir.y + game->player->plane.y
 			* dda.camera_x;
 		dda.step.x = get_step_direction(dda.ray_dir.x);
 		dda.step.y = get_step_direction(dda.ray_dir.y);
 		calculate_delta_distances(&dda);
 		calculate_side_distances(&dda, game->player);
-		perform_dda(&dda, game->map);
+		perform_dda(&game);
 		draw_walls_and_background(&dda, game, x);
 		x++;
 	}

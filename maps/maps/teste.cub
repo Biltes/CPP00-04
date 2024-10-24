@@ -1,9 +1,9 @@
 
 
-    NO    ./maps/textures/no_texture.xpm
-SO   ./maps/textures/so_texture.xpm
-  WE ./maps/textures/we_texture.xpm
-EA ./maps/textures/ea_texture.xpm
+    NO    maps/textures/no_texture.xpm
+SO   maps/textures/so_texture.xpm
+  WE maps/textures/we_texture.xpm
+EA maps/textures/ea_texture.xpm
 
 F255, 200,   0
 

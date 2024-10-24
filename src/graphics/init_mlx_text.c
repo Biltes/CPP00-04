@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:51:15 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/20 12:37:27 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:34:17 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_init(void *ptr, t_game *game, const char *error_message)
 {
 	if (!ptr)
-		ft_perror(game, (char *)error_message);
+		ft_perror((char *)error_message, game);
 }
 
 void	load_textures(t_game *game)
@@ -30,15 +30,15 @@ void	load_textures(t_game *game)
 	texture_paths[3] = game->map->so_texture;
 	while (i < 4)
 	{
-		game->render[i].image.img = mlx_xpm_file_to_image(game->mlx,
-				texture_paths[i], &game->texture[i].width,
-				&game->texture[i].height);
-		if (!game->render[i].image.img)
+		game->render[i].img = mlx_xpm_file_to_image(game->mlx,
+				texture_paths[i], &game->render[i].width,
+				&game->render[i].height);
+		if (!game->render[i].img)
 			ft_perror("Failed to load texture", game);
-		game->render[i].image.addr = mlx_get_data_addr(game->render[i].image.img,
-				&game->render[i].image.bpp, &game->render[i].image.line_len,
-				&game->render[i].image.endian);
-		if (!game->render[i].image.addr)
+		game->render[i].addr = mlx_get_data_addr(game->render[i].img,
+				&game->render[i].bpp, &game->render[i].line_len,
+				&game->render[i].endian);
+		if (!game->render[i].addr)
 			ft_perror("Failed to get texture address", game);
 		i++;
 	}
@@ -48,17 +48,17 @@ void	load_textures(t_game *game)
 void	init_mlx_and_textures(t_game *game)
 {
 	game->mlx = mlx_init();
-	check_init("Failed to initialize mlx", game->mlx, game);
+	check_init(game->mlx, "Failed to initialize mlx", game);
 	load_textures(game);
-	game->render->width = (int)WIDTH;
-	game->render->height = (int)HEIGHT;
-	game->render->image.img = mlx_new_image(game->mlx,
-			game->render->width, game->render->height);
-	check_init("Failed to create new image", game->render->image.img, game);
-	game->render->image.addr = mlx_get_data_addr(game->render->image.img,
-			&game->render->image.bpp, &game->render->image.line_len, &game->render->image.endian);
-	check_init("Failed to get image address", game->render->image.addr, game);
-	game->win = mlx_new_window(game->mlx, game->render->width,
-			game->render->height, "CUB3D");
-	check_init("Failed to create new window", game->win, game);
+	game->screen.width = (int)SCREEN_WIDTH;
+	game->screen.height = (int)SCREEN_HEIGHT;
+	game->screen.img = mlx_new_image(game->mlx,
+			game->screen.width, game->screen.height);
+	check_init(game->screen.img, "Failed to create new image", game);
+	game->screen.addr = mlx_get_data_addr(game->screen.img,
+			&game->screen.bpp, &game->screen.line_len, &game->screen.endian);
+	check_init(game->screen.addr, "Failed to get image address", game);
+	game->win = mlx_new_window(game->mlx, game->screen.width,
+			game->screen.height, "CUB3D");
+	check_init(game->win, "Failed to create new window", game);
 }
