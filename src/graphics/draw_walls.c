@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:00:05 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/24 17:33:37 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:17:56 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	intersection_point(t_dda *ray, t_game *game, t_render *wall)
 
 static void	find_texture_position_x(t_dda *ray, t_game *game, t_render *wall)
 {
-	wall->texture_x = (int)(wall->point_x * game->render->width);
+	wall->texture_x = (int)(wall->point_x * TEXTURE_HEIGHT);
 	if ((ray->hit == 0 && ray->ray_dir.x < 0)
 		|| (ray->hit == 1 && ray->ray_dir.y > 0))
-		wall->texture_x = game->render->width - wall->texture_x - 1;
+		wall->texture_x = TEXTURE_HEIGHT - wall->texture_x - 1;
 	wall->texture_step = (double)game->render->height / wall->height;
 }
 
@@ -56,7 +56,7 @@ void	draw_walls_and_background(t_dda *ray, t_game *game, int x)
 	t_render	*texture;
 
 	texture = set_wall_texture(game, ray);
-	wall.height = (int)(SCREEN_HEIGHT / ray->perp_wall_dist);
+	wall.height = fabs(SCREEN_HEIGHT / ray->perp_wall_dist);
 	wall.start_y = (SCREEN_HEIGHT - wall.height) / 2;
 	wall.end_y = (SCREEN_HEIGHT + wall.height) / 2;
 	if(wall.start_y < 0)
@@ -65,7 +65,7 @@ void	draw_walls_and_background(t_dda *ray, t_game *game, int x)
 	find_texture_position_x(ray, game, &wall);
 	wall.texture_pos = (wall.start_y - SCREEN_HEIGHT / 2
 			+ wall.height / 2) * wall.texture_step;
-	draw_ceiling(game, x, wall.start_y);
+	draw_ceiling(game, x);
 	draw_wall(game, x);
-	draw_floor(game, x, wall.end_y);
+	draw_floor(game, x);
 }

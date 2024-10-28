@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 19:58:16 by crocha-s          #+#    #+#             */
-/*   Updated: 2024/10/24 17:27:10 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:18:14 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ int		key_release(int keycode, t_game *game);
 int		draw_rays(t_game *game);
 void	init_mlx_and_textures(t_game *game);
 void	draw_wall(t_game *game, int x);
-void	draw_floor(t_game *game, int x, int start_y);
-void	draw_ceiling(t_game *game, int x, int start_y);
+void	draw_floor(t_game *game, int x);
+void	draw_ceiling(t_game *game, int x);
 t_vector	create_vector(float x, float y);
 int		end_game(t_game *game);
 void	setup(t_game *game);

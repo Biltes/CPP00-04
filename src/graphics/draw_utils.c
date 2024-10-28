@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 11:53:22 by migupere          #+#    #+#             */
-/*   Updated: 2024/10/24 17:28:43 by migupere         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:17:28 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@ void	my_pixel_put(t_render *texture, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	draw_ceiling(t_game *game, int x, int start_y)
+void	draw_ceiling(t_game *game, int x)
 {
 	int	y;
 	int	ceiling_color;
 
 	y = 0;
 	ceiling_color = game->map->c_color;
-	while (y < start_y)
+	while (y < game->screen.start_y)
 	{
 		my_pixel_put(&game->screen, x, y, ceiling_color);
 		y++;
 	}
 }
 
-void	draw_floor(t_game *game, int x, int start_y)
+void	draw_floor(t_game *game, int x)
 {
 	int	y;
 	int	floor_color;
 
-	y = start_y;
+	y = game->screen.end_y;
 	floor_color = game->map->f_color;
 	while (y < SCREEN_HEIGHT)
 	{
