@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:15:29 by migupere          #+#    #+#             */
-/*   Updated: 2024/11/29 19:25:51 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:44:34 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void PhoneBook::addContact() {
 	std::string input;
 
 	std::cout << "First name: ";
-	getline(std::cin, input);
+	if (!getline(std::cin, input))
+		return ;
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -28,7 +29,8 @@ void PhoneBook::addContact() {
 	newContact.setFirstName(input);
 
 	std::cout << "Last Name: ";
-	getline(std::cin, input);
+	if (!getline(std::cin, input))
+		return ;
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -36,7 +38,8 @@ void PhoneBook::addContact() {
 	newContact.setLastName(input);
 
 	std::cout << "Nickname: ";
-	getline(std::cin, input);
+	if (!getline(std::cin, input))
+		return ;
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -44,7 +47,8 @@ void PhoneBook::addContact() {
 	newContact.setNickname(input);
 
 	std::cout << "Phone number: ";
-	getline(std::cin, input);
+	if (!getline(std::cin, input))
+		return ;
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -87,22 +91,21 @@ void PhoneBook::searchContact() const
 		std::cout << std::setw(10) << _contacts[i].getNickname().substr(0, 9) + "." << std::endl;
 	}
 	if (std::cin.fail()) {
-            std::cin.clear(); // Limpa o estado de erro
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Descarta entrada inválida
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
 	int index;
 	std::cout << "Enter the index: ";
 	std::cin >> index;
 	if (std::cin.eof()) {
-		std::cout << "Exiting program..." << std::endl;
 		return ;
 	}
 	if	(index >= 1 && index < 9) {
-		std::cout << "First Name: " << _contacts[index].getFirstName() << std::endl;;
-		std::cout << "Last Name: " << _contacts[index].getLastName() << std::endl;;
-		std::cout << "Nickname: " << _contacts[index].getNickname() << std::endl;;
-		std::cout << "Phone number: " << _contacts[index].getPhoneNumber() << std::endl;;
-		std::cout << "Darkest secret: " << _contacts[index].getDarkestSecret() << std::endl;;
+		std::cout << "First Name: " << _contacts[index - 1].getFirstName() << std::endl;;
+		std::cout << "Last Name: " << _contacts[index - 1].getLastName() << std::endl;;
+		std::cout << "Nickname: " << _contacts[index - 1].getNickname() << std::endl;;
+		std::cout << "Phone number: " << _contacts[index - 1].getPhoneNumber() << std::endl;;
+		std::cout << "Darkest secret: " << _contacts[index - 1].getDarkestSecret() << std::endl;;
 	}
 	else {
 		std::cout << "Invalid index" << std::endl;

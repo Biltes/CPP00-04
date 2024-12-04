@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:15:26 by migupere          #+#    #+#             */
-/*   Updated: 2024/11/25 15:24:16 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/03 17:09:07 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,17 @@ int main (void)
 	std::cout << "Welcome to the Phonebook!" << std::endl;
 	while(true)
 	{
+		command.clear();
+		if (std::cin.eof()){
+			std::cout << "\nExiting Phonebook. Goodbye!" << std::endl;
+			break ;
+		}
 		std::cout << "Please enter a command: ";
-		getline(std::cin, command);
+		if (!std::getline(std::cin, command))
+        {
+            std::cout << "\nExiting Phonebook. Goodbye!" << std::endl;
+            break;
+        }
 		if (command == "ADD")
 			phonebook.addContact();
 		else if (command == "SEARCH")
