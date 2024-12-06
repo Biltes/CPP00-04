@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:15:29 by migupere          #+#    #+#             */
-/*   Updated: 2024/12/03 17:44:34 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:51:16 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,51 @@ void PhoneBook::searchContact() const
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-	int index;
-	std::cout << "Enter the index: ";
-	std::cin >> index;
-	if (std::cin.eof()) {
-		return ;
-	}
-	if	(index >= 1 && index < 9) {
-		std::cout << "First Name: " << _contacts[index - 1].getFirstName() << std::endl;;
-		std::cout << "Last Name: " << _contacts[index - 1].getLastName() << std::endl;;
-		std::cout << "Nickname: " << _contacts[index - 1].getNickname() << std::endl;;
-		std::cout << "Phone number: " << _contacts[index - 1].getPhoneNumber() << std::endl;;
-		std::cout << "Darkest secret: " << _contacts[index - 1].getDarkestSecret() << std::endl;;
-	}
-	else {
-		std::cout << "Invalid index" << std::endl;
-	}
-	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+// 	int index;
+// 	std::cout << "Enter the index: ";
+// 	std::cin >> index;
+// 	if (std::cin.eof()) {
+// 		return ;
+// 	}
+// 	if	(index >= 1 && index < 9) {
+// 		std::cout << "First Name: " << _contacts[index - 1].getFirstName() << std::endl;;
+// 		std::cout << "Last Name: " << _contacts[index - 1].getLastName() << std::endl;;
+// 		std::cout << "Nickname: " << _contacts[index - 1].getNickname() << std::endl;;
+// 		std::cout << "Phone number: " << _contacts[index - 1].getPhoneNumber() << std::endl;;
+// 		std::cout << "Darkest secret: " << _contacts[index - 1].getDarkestSecret() << std::endl;;
+// 	}
+// 	else {
+// 		std::cout << "Invalid index" << std::endl;
+// 	}
+// 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+// }
+    std::string input;
+    while (true) {
+        std::cout << "Enter the index: ";
+        std::getline(std::cin, input);
+
+        if (std::cin.eof()) {
+            return;
+        }
+        if (input.empty()) {
+            std::cout << "Input cannot be empty. Please try again." << std::endl;
+            continue;
+        }
+        if (input.length() == 1 && input[0] >= '1' && input[0] <= '8') {
+            int index = input[0] - '0';
+            const Contact& contact = _contacts[index - 1];
+            if (!contact.getFirstName().empty()) {
+                std::cout << "First Name: " << contact.getFirstName() << std::endl;
+                std::cout << "Last Name: " << contact.getLastName() << std::endl;
+                std::cout << "Nickname: " << contact.getNickname() << std::endl;
+                std::cout << "Phone Number: " << contact.getPhoneNumber() << std::endl;
+                std::cout << "Darkest Secret: " << contact.getDarkestSecret() << std::endl;
+            } else {
+                std::cout << "No contact found at this index." << std::endl;
+            }
+            break;
+        } else {
+            std::cout << "Invalid input. Please enter a number between 1 and 8." << std::endl;
+        }
+    }
 }
