@@ -5,14 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: migupere <migupere@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/06 17:37:12 by migupere          #+#    #+#              #
-#    Updated: 2024/12/09 11:46:50 by migupere         ###   ########.fr        #
+#    Created: 2024/12/12 12:33:30 by migupere          #+#    #+#              #
+#    Updated: 2024/12/12 12:33:41 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Fixed
+NAME = fragtrap
 
-SRC = main.cpp Fixed.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

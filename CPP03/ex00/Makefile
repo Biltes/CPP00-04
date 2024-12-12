@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: migupere <migupere@student.42.fr>          +#+  +:+       +#+         #
+#    By: migupere <migupere@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/06 17:37:12 by migupere          #+#    #+#              #
-#    Updated: 2024/12/09 11:46:50 by migupere         ###   ########.fr        #
+#    Created: 2024/12/10 14:53:26 by migupere          #+#    #+#              #
+#    Updated: 2024/12/10 14:54:45 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Fixed
+NAME = claptrap
 
-SRC = main.cpp Fixed.cpp
+SRC = main.cpp ClapTrap.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

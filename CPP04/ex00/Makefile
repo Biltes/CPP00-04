@@ -5,15 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: migupere <migupere@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/06 17:37:12 by migupere          #+#    #+#              #
-#    Updated: 2024/12/09 11:46:50 by migupere         ###   ########.fr        #
+#    Created: 2024/12/12 14:29:09 by migupere          #+#    #+#              #
+#    Updated: 2024/12/12 14:53:51 by migupere         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Fixed
+NAME = polymorphism
 
-SRC = main.cpp Fixed.cpp
-
+SRC = main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp
 OBJ = $(SRC:.cpp=.o)
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
