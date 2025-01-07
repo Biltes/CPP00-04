@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 16:15:29 by migupere          #+#    #+#             */
-/*   Updated: 2024/12/04 12:51:16 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:55:42 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 PhoneBook::PhoneBook(){this->_id = 0, _oldestContact = 0;}
 PhoneBook::~PhoneBook(){}
 
+bool isPrintableASCII(const std::string &input) {
+    for (size_t i = 0; i < input.length(); i++) {
+        unsigned char c = static_cast<unsigned char>(input[i]);
+        if (!isprint(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void PhoneBook::addContact() {
 	Contact newContact;
 	std::string input;
@@ -22,7 +32,11 @@ void PhoneBook::addContact() {
 	std::cout << "First name: ";
 	if (!getline(std::cin, input))
 		return ;
-	if(input.empty()) {
+	if (!isPrintableASCII(input)) {
+		std::cout << "Invalid input. Must contain only printable ASCII characters." << std::endl;
+		return;
+	}
+	if(input.empty()){
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
 	}
@@ -31,6 +45,10 @@ void PhoneBook::addContact() {
 	std::cout << "Last Name: ";
 	if (!getline(std::cin, input))
 		return ;
+	if (!isPrintableASCII(input)) {
+		std::cout << "Invalid input. Must contain only printable ASCII characters." << std::endl;
+		return;
+	}
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -40,6 +58,10 @@ void PhoneBook::addContact() {
 	std::cout << "Nickname: ";
 	if (!getline(std::cin, input))
 		return ;
+	if (!isPrintableASCII(input)) {
+		std::cout << "Invalid input. Must contain only printable ASCII characters." << std::endl;
+		return;
+	}
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -63,6 +85,10 @@ void PhoneBook::addContact() {
 
 	std::cout << "Darkest secret: ";
 	getline(std::cin, input);
+	if (!isPrintableASCII(input)) {
+		std::cout << "Invalid input. Must contain only printable ASCII characters." << std::endl;
+		return;
+	}
 	if(input.empty()) {
 		std::cout << "Field cannot be empty" << std::endl;
 		return;
@@ -94,24 +120,6 @@ void PhoneBook::searchContact() const
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-// 	int index;
-// 	std::cout << "Enter the index: ";
-// 	std::cin >> index;
-// 	if (std::cin.eof()) {
-// 		return ;
-// 	}
-// 	if	(index >= 1 && index < 9) {
-// 		std::cout << "First Name: " << _contacts[index - 1].getFirstName() << std::endl;;
-// 		std::cout << "Last Name: " << _contacts[index - 1].getLastName() << std::endl;;
-// 		std::cout << "Nickname: " << _contacts[index - 1].getNickname() << std::endl;;
-// 		std::cout << "Phone number: " << _contacts[index - 1].getPhoneNumber() << std::endl;;
-// 		std::cout << "Darkest secret: " << _contacts[index - 1].getDarkestSecret() << std::endl;;
-// 	}
-// 	else {
-// 		std::cout << "Invalid index" << std::endl;
-// 	}
-// 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-// }
     std::string input;
     while (true) {
         std::cout << "Enter the index: ";

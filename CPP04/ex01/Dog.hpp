@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:41:54 by migupere          #+#    #+#             */
-/*   Updated: 2024/12/12 14:54:10 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:16:21 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 #define DOG_HPP
 
 #include "Animal.hpp"
+#include "Brain.hpp"
 
 class Dog:public Animal{
+	private:
+		Brain *brain;
 	public:
 		Dog();
 		~Dog();
 		Dog(const Dog& src);
 		Dog& operator=(const Dog& src);
 		void makeSound() const;
+		Brain* getBrain() const;
 };
 
 #endif

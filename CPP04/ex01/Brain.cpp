@@ -6,7 +6,7 @@
 /*   By: migupere <migupere@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:33:46 by migupere          #+#    #+#             */
-/*   Updated: 2024/12/12 17:38:40 by migupere         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:34:16 by migupere         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,14 @@ Brain & Brain::operator=(const Brain& src){
 }
 
 std::string Brain::getIdea(int index) const{
+	if (index < 0 || index >= 100)
+		return ("Invalid index");
 	return (ideas[index]);
 }
 
 void Brain::setIdea(int index, std::string idea){
-	ideas[index] = idea;
+	if (index >= 0 && index < 100)
+		ideas[index] = idea;
+	else
+		std::cout << "Invalid index" << std::endl;
 }
